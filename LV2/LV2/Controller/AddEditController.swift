@@ -17,7 +17,7 @@ class AddEditController: UIViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var addEditButton: UIButton!
-    @IBOutlet weak var txtDescription: UITextField!
+    @IBOutlet weak var txtDescription: UITextView!
     @IBOutlet weak var txtDateOfDeath: UITextField!
     @IBOutlet weak var txtDateOfBirth: UITextField!
     @IBOutlet weak var txtSurename: UITextField!
@@ -28,16 +28,17 @@ class AddEditController: UIViewController {
     
     
     private var activeTextField : UITextField? = nil
-    private var edit = false
+    var edit = false
     lazy var viewModel: AddEditViewModel = AddEditViewModel()
     private var datePicker = UIDatePicker()
-    private var delegate : AddEditDelegate?
+    var delegate : AddEditDelegate?
     private let cellReuseIdentifier = "cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setDelegates()
+        txtDescription.textColor = UIColor.lightGray.withAlphaComponent(0.75)
         // Do any additional setup after loading the view.
     }
     
@@ -56,6 +57,7 @@ class AddEditController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         setDatePicker(txtField: txtDateOfBirth)
         setDatePicker(txtField: txtDateOfDeath)
+        txtDescription.layer.borderColor = UIColor.gray.withAlphaComponent(0.4).cgColor
         let tap = UITapGestureRecognizer(target: self, action: #selector(setImagePicker(_:)))
         profileImage.addGestureRecognizer(tap)
         addQuoteButton.addTarget(self, action: #selector(onAddQuoteClicked), for: .touchUpInside)
@@ -231,6 +233,9 @@ extension AddEditController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = (self.quoteTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         cell.textLabel?.text = viewModel.quotes[indexPath.row]
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.lineBreakMode = .byWordWrapping
+        //cell.textLabel?.font = UIFont.systemFont(ofSize: 13)
         return cell
     }
     
@@ -253,5 +258,51 @@ extension AddEditController: UITextFieldDelegate {
     // when user click 'done' or dismiss the keyboard
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
+    }
+}
+
+extension AddEditController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        // Combine the textView text and the replacement text to
+        // create the updated text string
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+
+        // If updated text view will be empty, add the placeholder
+        // and set the cursor to the beginning of the text view
+        if updatedText.isEmpty {
+
+            textView.text = "Description"
+            textView.textColor = UIColor.lightGray.withAlphaComponent(0.75)
+
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        }
+
+        // Else if the text view's placeholder is showing and the
+        // length of the replacement string is greater than 0, set
+        // the text color to black then set its text to the
+        // replacement string
+         else if textView.textColor == UIColor.lightGray.withAlphaComponent(0.75) && !text.isEmpty {
+            textView.textColor = UIColor.black
+            textView.text = text
+        }
+
+        // For every other case, the text should change with the usual
+        // behavior...
+        else {
+            return true
+        }
+
+        // ...otherwise return false since the updates have already
+        // been made
+        return false
+    }
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
     }
 }
