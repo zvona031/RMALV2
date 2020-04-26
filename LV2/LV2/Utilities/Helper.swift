@@ -72,5 +72,24 @@ struct Helper {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         return alert
     }
+    
+    static func makePlaceholderForTextView(textview: UITextView) -> UILabel {
+        let placeholderLabel = UILabel()
+        placeholderLabel.text = "Description"
+        placeholderLabel.font = UIFont.systemFont(ofSize: 15)
+        placeholderLabel.sizeToFit()
+        textview.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (textview.font?.pointSize)! / 2)
+        placeholderLabel.textColor = UIColor.lightGray.withAlphaComponent(0.75)
+        placeholderLabel.isHidden = !textview.text.isEmpty
+        return placeholderLabel
+    }
+    
+    static func setBorderForTextView(textview: UITextView){
+        textview.layer.masksToBounds = true
+        textview.layer.cornerRadius = 3
+        textview.layer.borderWidth = 1
+        textview.layer.borderColor = UIColor.gray.withAlphaComponent(0.4).cgColor
+    }
 }
 

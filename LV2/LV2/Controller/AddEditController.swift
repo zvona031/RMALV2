@@ -14,7 +14,6 @@ protocol AddEditDelegate: class{
 
 class AddEditController: UIViewController {
     
-    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var addEditButton: UIButton!
     @IBOutlet weak var txtDescription: UITextView!
@@ -26,10 +25,8 @@ class AddEditController: UIViewController {
     @IBOutlet weak var txtQuote: UITextField!
     @IBOutlet weak var addQuoteButton: UIButton!
     
-    
-    private var activeTextField : UITextField? = nil
-    var edit = false
     lazy var viewModel: AddEditViewModel = AddEditViewModel()
+    private var placeholderLabel : UILabel!
     private var datePicker = UIDatePicker()
     var delegate : AddEditDelegate?
     private let cellReuseIdentifier = "cell"
@@ -38,45 +35,22 @@ class AddEditController: UIViewController {
         super.viewDidLoad()
         setUI()
         setDelegates()
-        txtDescription.textColor = UIColor.lightGray.withAlphaComponent(0.75)
-        // Do any additional setup after loading the view.
+        setActions()
+        // Do any additional setup after loading the view
     }
     
     func setDelegates(){
-        txtName.delegate = self
-        txtSurename.delegate = self
-        txtDateOfBirth.delegate = self
-        txtDateOfDeath.delegate = self
         txtDescription.delegate = self
         txtQuote.delegate = self
     }
     
-    func setUI(){
-        self.hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        setDatePicker(txtField: txtDateOfBirth)
-        setDatePicker(txtField: txtDateOfDeath)
-        txtDescription.layer.borderColor = UIColor.gray.withAlphaComponent(0.4).cgColor
+    func setActions(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(setImagePicker(_:)))
         profileImage.addGestureRecognizer(tap)
         addQuoteButton.addTarget(self, action: #selector(onAddQuoteClicked), for: .touchUpInside)
-        if edit == true {
+        if let person = viewModel.person {
             addEditButton.setTitle("Edit", for: .normal)
             addEditButton.addTarget(self, action: #selector(onAddEditClicked), for: .touchUpInside)
-            setTextFields()
-        }else{
-            addEditButton.addTarget(self, action: #selector(onAddEditClicked), for: .touchUpInside)
-        }
-    }
-    
-    func setDatePicker(txtField: UITextField){
-        datePicker = Helper.setDatePicker(datePicker: datePicker, txtField: txtField,firstAction: #selector(doneDatePicker),secondAction: #selector(cancelDatePicker))
-        
-    }
-    
-    func setTextFields(){
-        if let person = viewModel.person {
             let imageData = try? Data(contentsOf: URL(string: person.imageName)!)
             let image = UIImage(data: imageData!)
             profileImage.contentMode = .scaleAspectFill
@@ -87,35 +61,29 @@ class AddEditController: UIViewController {
             txtDateOfDeath.text = person.dateOfDeath
             txtDescription.text = person.description
             viewModel.quotes = person.quotes
+            placeholderLabel.isHidden = !txtDescription.text.isEmpty
+        }else{
+             addEditButton.addTarget(self, action: #selector(onAddEditClicked), for: .touchUpInside)
         }
+        
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            // if keyboard size is not available for some reason, dont do anything
-            return
-        }
-        var shouldMoveViewUp = false
-        // if active text field is not nil
-        if let activeTextField = activeTextField {
-            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
-            let topOfKeyboard = self.view.frame.height - keyboardSize.height - 100
-            print(topOfKeyboard)
-            print("bottom of textfield",bottomOfTextField)
-            // if the bottom of Textfield is below the top of keyboard, move up
-            if bottomOfTextField > topOfKeyboard {
-                shouldMoveViewUp = true
-            }
-        }
-        if(shouldMoveViewUp) {
-            self.view.frame.origin.y = 0 - keyboardSize.height
-        }
+    func setUI(){
+        self.hideKeyboardWhenTappedAround()
+        // setting pickers for birth and death
+        setDatePicker(txtField: txtDateOfBirth)
+        setDatePicker(txtField: txtDateOfDeath)
+        // making textView look like textField
+        placeholderLabel = Helper.makePlaceholderForTextView(textview: txtDescription)
+        Helper.setBorderForTextView(textview: txtDescription)
+        
+        
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }}
+    func setDatePicker(txtField: UITextField){
+        datePicker = Helper.setDatePicker(datePicker: datePicker, txtField: txtField,firstAction: #selector(doneDatePicker),secondAction: #selector(cancelDatePicker))
+        
+    }
     
     @objc func setImagePicker(_ sender: UITapGestureRecognizer? = nil){
         let alert = Helper.makeImagePickerAlert(firstAction: openCamera, secondAction: openGallery)
@@ -227,7 +195,7 @@ extension AddEditController : UINavigationControllerDelegate,UIImagePickerContro
 
 extension AddEditController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.quotes.count
+        return viewModel.getQouteNumber()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -235,7 +203,6 @@ extension AddEditController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = viewModel.quotes[indexPath.row]
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
-        //cell.textLabel?.font = UIFont.systemFont(ofSize: 13)
         return cell
     }
     
@@ -252,57 +219,22 @@ extension AddEditController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddEditController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        // set the activeTextField to the selected textfield
-        self.activeTextField = textField
-    }
+        UIView.animate(withDuration: 0.3) { [weak self] in
+        guard let welf = self else { return }
+        let frame = welf.view.frame
+        welf.view.frame = CGRect(x: frame.origin.x, y: frame.origin.y - 200, width: frame.width, height: frame.height)
+        }}
     // when user click 'done' or dismiss the keyboard
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.activeTextField = nil
-    }
+        UIView.animate(withDuration: 0.3) { [weak self] in
+        guard let welf = self else { return }
+        let frame = welf.view.frame
+        welf.view.frame = CGRect(x: frame.origin.x, y: frame.origin.y + 200, width: frame.width, height: frame.height)
+        }}
 }
 
 extension AddEditController: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-
-        // Combine the textView text and the replacement text to
-        // create the updated text string
-        let currentText:String = textView.text
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
-        // If updated text view will be empty, add the placeholder
-        // and set the cursor to the beginning of the text view
-        if updatedText.isEmpty {
-
-            textView.text = "Description"
-            textView.textColor = UIColor.lightGray.withAlphaComponent(0.75)
-
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-
-        // Else if the text view's placeholder is showing and the
-        // length of the replacement string is greater than 0, set
-        // the text color to black then set its text to the
-        // replacement string
-         else if textView.textColor == UIColor.lightGray.withAlphaComponent(0.75) && !text.isEmpty {
-            textView.textColor = UIColor.black
-            textView.text = text
-        }
-
-        // For every other case, the text should change with the usual
-        // behavior...
-        else {
-            return true
-        }
-
-        // ...otherwise return false since the updates have already
-        // been made
-        return false
-    }
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
-            if textView.textColor == UIColor.lightGray {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        }
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 }

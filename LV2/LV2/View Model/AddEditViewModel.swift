@@ -9,9 +9,13 @@
 import Foundation
 
 class AddEditViewModel {
-    
+        
     var person: InspiringPerson?
     var quotes: [String] = []
+    
+    init(person: InspiringPerson? = nil) {
+        self.person = person
+    }
     
     func addPeople(name: String, sureName: String,imageName: String,dateOfBirth: String,dateOfDeath: String,description: String){
         PeopleRepo.shared.addToRepo(name: name, sureName: sureName,imageName: imageName,dateOfBirth: dateOfBirth,dateOfDeath: dateOfDeath,description: description,quotes: quotes)
@@ -27,6 +31,10 @@ class AddEditViewModel {
     
     func removeQuote(at: Int){
         quotes.remove(at: at)
+    }
+    
+    func getQouteNumber() -> Int{
+        return quotes.count
     }
     
     

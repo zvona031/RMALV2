@@ -12,8 +12,9 @@ class PeopleController: UIViewController,AddEditDelegate,PersonCellDelegate{
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    let cellIdentifier = "peopleCell"
-    let addEditIdentifier = "addEdit"
+    
+    private let cellIdentifier = "peopleCell"
+    private let addEditIdentifier = "addEdit"
     lazy var viewModel: PeopleViewModel = PeopleViewModel()
     
     override func viewDidLoad() {
@@ -26,7 +27,6 @@ class PeopleController: UIViewController,AddEditDelegate,PersonCellDelegate{
     @objc func addClicked(sender: UIBarButtonItem){
         let vc = storyboard?.instantiateViewController(withIdentifier: addEditIdentifier) as! AddEditController
         vc.title = "Add new person"
-        vc.edit = false
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -66,7 +66,6 @@ extension PeopleController: UITableViewDelegate, UITableViewDataSource {
             vc.title = person.name
             vc.viewModel.person = person
             vc.delegate = self
-            vc.edit = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let deleteAction = UIContextualAction(style: .normal, title: "Delete") {  (contextualAction, view, boolValue) in
