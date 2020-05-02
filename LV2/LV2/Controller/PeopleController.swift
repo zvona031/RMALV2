@@ -32,6 +32,7 @@ class PeopleController: UIViewController,AddEditDelegate,PersonCellDelegate{
     }
     
     func reloadData() {
+        viewModel.getAll()
         self.tableView.reloadData()
     }
     

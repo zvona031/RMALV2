@@ -10,17 +10,29 @@ import Foundation
 
 class PeopleViewModel {
     
+    var db: SqlDatabase = SqlDatabase()
+    var people: [InspiringPerson] = []
+    
+    init() {
+        self.getAll()
+    }
+    
     func removePerson(at: Int){
-        let person = PeopleRepo.shared.getPerson(at: at)
-        PeopleRepo.shared.removeFromRepo(person: person)
+        let person = people[at]
+        db.deleteByID(id: person.id)
+        people.remove(at: at)
     }
     
     func getCount() -> Int{
-        return PeopleRepo.shared.getAll().count
+        return people.count
     }
     
     func getPerson(at: Int) -> InspiringPerson {
-        return PeopleRepo.shared.getPerson(at: at)
+        return people[at]
+    }
+    
+    func getAll(){
+        people = db.read()
     }
     
 }

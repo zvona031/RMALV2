@@ -29,13 +29,14 @@ class PersonCell: UITableViewCell {
     
     func bindView(){
         if let person = self.person {
-            let imageData = try? Data(contentsOf: URL(string: person.imageName)!)
-            let image = UIImage(data: imageData!)
-            let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onImageClicked))
-            profileImage.isUserInteractionEnabled = true
-            profileImage.addGestureRecognizer(imageTapRecognizer)
-            profileImage.contentMode = .scaleAspectFill
-            profileImage.image = image
+            if let imageData = try? Data(contentsOf: URL(string: person.imageName)!){
+                let image = UIImage(data: imageData)
+                let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onImageClicked))
+                profileImage.isUserInteractionEnabled = true
+                profileImage.addGestureRecognizer(imageTapRecognizer)
+                profileImage.contentMode = .scaleAspectFill
+                profileImage.image = image
+            }
             nameLabel.text = person.name + " " + person.sureName
             dateLabel.text = person.dateOfBirth + "-" + person.dateOfDeath
             descriptionLabel.text = person.description

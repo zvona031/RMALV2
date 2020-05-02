@@ -3,11 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		117471D4245D7BEE00155A64 /* Pods_LV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117471D3245D7BEE00155A64 /* Pods_LV2.framework */; };
+		117471D5245D7BEE00155A64 /* Pods_LV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 117471D3245D7BEE00155A64 /* Pods_LV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11A907352451F0E300D4BF23 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A907342451F0E300D4BF23 /* Extensions.swift */; };
+		11CFCF002459E41500CDF351 /* SqlDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CFCEFF2459E41500CDF351 /* SqlDatabase.swift */; };
 		11D21C862450D35900C2E48A /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D21C852450D35900C2E48A /* AddEditController.swift */; };
 		11D21C892450D38D00C2E48A /* AddEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D21C882450D38D00C2E48A /* AddEditViewModel.swift */; };
 		11D21C8B24519A9400C2E48A /* PeopleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D21C8A24519A9300C2E48A /* PeopleViewModel.swift */; };
@@ -21,11 +24,34 @@
 		11E353BF2450C1C7001BD478 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E353BE2450C1C7001BD478 /* ImageSaver.swift */; };
 		11E353C12450C1D6001BD478 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E353C02450C1D6001BD478 /* Helper.swift */; };
 		11E353C32450C1EE001BD478 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E353C22450C1EE001BD478 /* PersonCell.swift */; };
-		11E353C62450C83E001BD478 /* PeopleRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E353C52450C83E001BD478 /* PeopleRepo.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		117471D6245D7BEE00155A64 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				117471D5245D7BEE00155A64 /* Pods_LV2.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		05AB02B2CEC25DD311D11E65 /* Pods-LV2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LV2.debug.xcconfig"; path = "Target Support Files/Pods-LV2/Pods-LV2.debug.xcconfig"; sourceTree = "<group>"; };
+		117471B4245D770200155A64 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471B7245D775D00155A64 /* Pods_LV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_LV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471BA245D77D600155A64 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471BD245D783500155A64 /* Pods_LV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_LV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471C0245D791800155A64 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471C7245D794500155A64 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		117471CE245D7B8300155A64 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		117471D3245D7BEE00155A64 /* Pods_LV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_LV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11A907342451F0E300D4BF23 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		11CFCEFF2459E41500CDF351 /* SqlDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlDatabase.swift; sourceTree = "<group>"; };
 		11D21C852450D35900C2E48A /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		11D21C882450D38D00C2E48A /* AddEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewModel.swift; sourceTree = "<group>"; };
 		11D21C8A24519A9300C2E48A /* PeopleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewModel.swift; sourceTree = "<group>"; };
@@ -41,7 +67,8 @@
 		11E353BE2450C1C7001BD478 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		11E353C02450C1D6001BD478 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		11E353C22450C1EE001BD478 /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
-		11E353C52450C83E001BD478 /* PeopleRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleRepo.swift; sourceTree = "<group>"; };
+		3BD66F82A8EAB0DC0EF80F09 /* Pods-LV2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LV2.release.xcconfig"; path = "Target Support Files/Pods-LV2/Pods-LV2.release.xcconfig"; sourceTree = "<group>"; };
+		B4376C5D8D52B27317203E5E /* Pods_LV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,12 +76,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				117471D4245D7BEE00155A64 /* Pods_LV2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03F3D3B511E4AC56B21DD49C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				05AB02B2CEC25DD311D11E65 /* Pods-LV2.debug.xcconfig */,
+				3BD66F82A8EAB0DC0EF80F09 /* Pods-LV2.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		11D21C842450D2AE00C2E48A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +115,8 @@
 			children = (
 				11E353A52450BD42001BD478 /* LV2 */,
 				11E353A42450BD42001BD478 /* Products */,
+				03F3D3B511E4AC56B21DD49C /* Pods */,
+				FBECD0539CB35C8B8DC01514 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,9 +168,25 @@
 		11E353C42450C832001BD478 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				11E353C52450C83E001BD478 /* PeopleRepo.swift */,
+				11CFCEFF2459E41500CDF351 /* SqlDatabase.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		FBECD0539CB35C8B8DC01514 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				117471D3245D7BEE00155A64 /* Pods_LV2.framework */,
+				117471CE245D7B8300155A64 /* SQLite.framework */,
+				117471C7245D794500155A64 /* libsqlite3.tbd */,
+				117471C0245D791800155A64 /* SQLite.framework */,
+				117471BD245D783500155A64 /* Pods_LV2.framework */,
+				117471BA245D77D600155A64 /* SQLite.framework */,
+				117471B7245D775D00155A64 /* Pods_LV2.framework */,
+				117471B4245D770200155A64 /* SQLite.framework */,
+				B4376C5D8D52B27317203E5E /* Pods_LV2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +196,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11E353B72450BD45001BD478 /* Build configuration list for PBXNativeTarget "LV2" */;
 			buildPhases = (
+				37C8291DEFDADF39B033EEEE /* [CP] Check Pods Manifest.lock */,
 				11E3539F2450BD42001BD478 /* Sources */,
 				11E353A02450BD42001BD478 /* Frameworks */,
 				11E353A12450BD42001BD478 /* Resources */,
+				AF994D7E0560AC7ABD902524 /* [CP] Embed Pods Frameworks */,
+				117471D6245D7BEE00155A64 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,6 +258,50 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		37C8291DEFDADF39B033EEEE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LV2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF994D7E0560AC7ABD902524 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LV2/Pods-LV2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LV2/Pods-LV2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LV2/Pods-LV2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		11E3539F2450BD42001BD478 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -211,11 +313,11 @@
 				11E353BF2450C1C7001BD478 /* ImageSaver.swift in Sources */,
 				11E353A72450BD42001BD478 /* AppDelegate.swift in Sources */,
 				11E353A92450BD42001BD478 /* SceneDelegate.swift in Sources */,
+				11CFCF002459E41500CDF351 /* SqlDatabase.swift in Sources */,
 				11E353C12450C1D6001BD478 /* Helper.swift in Sources */,
 				11A907352451F0E300D4BF23 /* Extensions.swift in Sources */,
 				11D21C892450D38D00C2E48A /* AddEditViewModel.swift in Sources */,
 				11D21C862450D35900C2E48A /* AddEditController.swift in Sources */,
-				11E353C62450C83E001BD478 /* PeopleRepo.swift in Sources */,
 				11E353C32450C1EE001BD478 /* PersonCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,6 +460,7 @@
 		};
 		11E353B82450BD45001BD478 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05AB02B2CEC25DD311D11E65 /* Pods-LV2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -376,6 +479,7 @@
 		};
 		11E353B92450BD45001BD478 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BD66F82A8EAB0DC0EF80F09 /* Pods-LV2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

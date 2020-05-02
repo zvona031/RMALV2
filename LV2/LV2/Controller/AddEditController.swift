@@ -51,10 +51,11 @@ class AddEditController: UIViewController {
         if let person = viewModel.person {
             addEditButton.setTitle("Edit", for: .normal)
             addEditButton.addTarget(self, action: #selector(onAddEditClicked), for: .touchUpInside)
-            let imageData = try? Data(contentsOf: URL(string: person.imageName)!)
-            let image = UIImage(data: imageData!)
-            profileImage.contentMode = .scaleAspectFill
-            profileImage.image = image
+            if let imageData = try? Data(contentsOf: URL(string: person.imageName)!){
+                let image = UIImage(data: imageData)
+                profileImage.contentMode = .scaleAspectFill
+                profileImage.image = image
+            }
             txtName.text = person.name
             txtSurename.text = person.sureName
             txtDateOfBirth.text = person.dateOfBirth
